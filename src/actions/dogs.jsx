@@ -15,7 +15,7 @@ export function createBreed({breed,urls}){
         type: T.FETCH_BREED,
         payload: {
             breed,
-            dogs:urls.map(url => ({url,breed:extractBreed(url)}))
+            dogs: urls.map(url => ({url,breed:extractBreed(url)}))
         }
     }
 }

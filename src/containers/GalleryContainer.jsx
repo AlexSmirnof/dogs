@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import View from '../components/View/View';
 import Grid from '../components/Grid/Grid';
 import { BreedsList } from '../components/BreedsList/BreedsList';
 import { forwardRoute, addFavorite, removeFavorite, removeDog, viewAction } from '../actions/user';
 import { fetchBreed } from '../actions/dogs';
+import { settingsSelector, favoritesSelector, removedSelector,  galleryhDataSelector, breedsArraySelector } from '../selectors/selectors';
 
 
 class GalleryContainer extends Component {
@@ -21,14 +23,13 @@ class GalleryContainer extends Component {
     render(){
         const { settings:{grid,slides,autoplay}={}, data, breeds, favorites, removed, addFavorite, removeFavorite, removeDog, viewAction, match } = this.props;
         if (match.params.breed){
-            const dogs = data[match.params.breed] ? data[match.params.breed].filter(({url})=>!removed[url]) : [];
             return (
                 <div>
                 {
                     slides &&
                     <View
                         autoplay={autoplay}
-                        data={dogs} 
+                        data={data} 
                         favorites={favorites}
                         addFavorite={addFavorite} 
                         removeFavorite={removeFavorite}
@@ -39,7 +40,7 @@ class GalleryContainer extends Component {
                 {    
                     grid &&
                     <Grid 
-                        data={dogs} 
+                        data={data} 
                         favorites={favorites}
                         addFavorite={addFavorite} 
                         removeFavorite={removeFavorite}
@@ -62,13 +63,23 @@ class GalleryContainer extends Component {
 
 }
 
-const mapStateToProps = ({user:{settings, favorites, removed}, dogs:{breeds,data}}) => ({
-    settings,
-    favorites,
-    removed,
-    breeds:Object.keys(breeds).map(breed=>({breed,subBreeds:breeds[breed]})),
-    data
+const mapStateToProps = (state, props) => ({
+    settings: settingsSelector(state),
+    favorites: favoritesSelector(state),
+    removed: removedSelector(state),
+    breeds: breedsArraySelector(state),
+    data: galleryhDataSelector(state, props)
 })
 
-export default connect(mapStateToProps, { viewAction, forwardRoute, fetchBreed, addFavorite, removeFavorite, removeDog })(GalleryContainer);
+const mapDispatchToProps = dispatch => bindActionCreators({
+    viewAction, 
+    forwardRoute, 
+    fetchBreed, 
+    addFavorite,
+    removeFavorite, 
+    removeDog
+}, 
+dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(GalleryContainer);
 

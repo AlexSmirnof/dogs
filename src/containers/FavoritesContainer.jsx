@@ -4,9 +4,7 @@ import View from '../components/View/View';
 import Grid from '../components/Grid/Grid';
 import { addFavorite, removeFavorite } from '../actions/user';
 import { removeDog } from '../actions/user';
-
-
-
+import { favoritesSelector, settingsSelector, removedSelector, favoritesDataSelector } from '../selectors/selectors';
 
 
 const FavoritesContainer = ({settings:{grid,slides,autoplay}, data, favorites, addFavorite, removeFavorite, removeDog, viewAction }) => (
@@ -38,11 +36,11 @@ const FavoritesContainer = ({settings:{grid,slides,autoplay}, data, favorites, a
     )
 
 
-const mapStateToProps = ({user, dogs}) => ({
-    settings: user.settings,
-    data: Object.values(user.favorites).filter(({url})=>!user.removed[url]),
-    favorites: user.favorites,
-    removed: user.removed
+const mapStateToProps = state => ({
+    settings: settingsSelector(state),
+    data: favoritesDataSelector(state),
+    favorites: favoritesSelector(state),
+    removed: removedSelector(state)
 })
 
 export default connect(mapStateToProps,{ addFavorite, removeFavorite, removeDog })(FavoritesContainer);
