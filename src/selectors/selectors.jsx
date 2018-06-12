@@ -4,7 +4,7 @@ import { createSelector } from 'reselect';
 export const matchSelector = (state, props) => props.match;
 export const paramsSelector = createSelector(
     matchSelector,
-    match => match.params
+    match => match.params 
 )
 export const routerSelector = state => state.router;
 export const pathnameSelector = createSelector(
@@ -66,7 +66,7 @@ export const searchDataSelector = createSelector (
     searchSelector,
     randomDogsSelector,
     dogsDataSelector,
-    (removed, search, randomDogs, data) => {
+    (removed = {}, search = '', randomDogs, data = {}) => {
         search = search.trim();
         if (search.length > 0){
             return data[search] ? data[search].filter(({url}) => !removed[url]) : []

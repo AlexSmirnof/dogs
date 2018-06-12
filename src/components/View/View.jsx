@@ -46,7 +46,7 @@ class View extends Component {
         let {index,popup} = this.state;
         const { data = [], favorites, addFavorite, removeFavorite, removeDog } = this.props;
         if (data.length === 0) return null;
-        const dog = data[index];
+        const dog = data[index] || {};
         return (
             <div>
                 <div style={{minHeight:700,display:'flex', justifyContent:'space-evenly',alignItems:'center'}}>
