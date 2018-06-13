@@ -4,24 +4,24 @@ import { connect } from 'react-redux';
 import View from '../components/View/View';
 import Grid from '../components/Grid/Grid';
 import { BreedsList } from '../components/BreedsList/BreedsList';
-import { forwardRoute, addFavorite, removeFavorite, removeDog, viewAction } from '../actions/user';
-import { fetchBreed } from '../actions/dogs';
+import { forwardRouteAction, addFavoriteAction, removeFavoriteAction, removeDogAction, viewAction, sagaFetchBreedAction } from '../actions/actions';
 import { settingsSelector, favoritesSelector, removedSelector,  galleryhDataSelector, breedsArraySelector } from '../selectors/selectors';
 
 
 class GalleryContainer extends Component {
 
     onBreed = (breed) => {
-        this.props.fetchBreed(breed);
-        this.props.forwardRoute(`${this.props.match.url}/${breed}`);
+        this.props.sagaFetchBreedAction(breed);
+        this.props.forwardRouteAction(`${this.props.match.url}/${breed}`);
     }
     onSubBreed = (fullBreed) => {
-        this.props.fetchBreed(fullBreed);        
-        this.props.forwardRoute(`${this.props.match.url}/${fullBreed}`);
+        this.props.sagaFetchBreedAction(fullBreed);        
+        this.props.forwardRouteAction(`${this.props.match.url}/${fullBreed}`);
     }    
 
     render(){
-        const { settings:{grid,slides,autoplay}={}, data, breeds, favorites, removed, addFavorite, removeFavorite, removeDog, viewAction, match } = this.props;
+        const { settings: {grid,slides,autoplay}={}, data, breeds, favorites, removed, match } = this.props;
+        const { addFavoriteAction, removeFavoriteAction, removeDogAction, viewAction } = this.props;
         if (match.params.breed){
             return (
                 <div>
@@ -31,9 +31,9 @@ class GalleryContainer extends Component {
                         autoplay={autoplay}
                         data={data} 
                         favorites={favorites}
-                        addFavorite={addFavorite} 
-                        removeFavorite={removeFavorite}
-                        removeDog={removeDog} 
+                        addFavoriteAction={addFavoriteAction} 
+                        removeFavoriteAction={removeFavoriteAction}
+                        removeDogAction={removeDogAction} 
                         viewAction={viewAction}
                         />
                 }
@@ -42,9 +42,9 @@ class GalleryContainer extends Component {
                     <Grid 
                         data={data} 
                         favorites={favorites}
-                        addFavorite={addFavorite} 
-                        removeFavorite={removeFavorite}
-                        removeDog={removeDog} 
+                        addFavoriteAction={addFavoriteAction} 
+                        removeFavoriteAction={removeFavoriteAction}
+                        removeDogAction={removeDogAction} 
                         viewAction={viewAction}
                         />  
                 }  
@@ -73,11 +73,11 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     viewAction, 
-    forwardRoute, 
-    fetchBreed, 
-    addFavorite,
-    removeFavorite, 
-    removeDog
+    removeDogAction,
+    addFavoriteAction,
+    forwardRouteAction, 
+    removeFavoriteAction, 
+    sagaFetchBreedAction
 }, 
 dispatch);
 

@@ -2,7 +2,9 @@ import * as R from 'ramda';
 import api from "../api/api";
 import {  call, put, select, take, takeLatest, spawn } from 'redux-saga/effects';
 import { Types as T, SagaTypes as S } from '../actions/types';
-import { createDog, createBreed, createBreeds } from '../actions/dogs';
+// import { createDog, createBreed, createBreeds } from '../actions/dogs';
+import { fetchDogAction, fetchBreedAction, fetchBreedsAction } from '../actions/actions';
+
 
 
 export function* randomDogsSaga(limit = 20){
@@ -13,7 +15,7 @@ export function* randomDogsSaga(limit = 20){
             try {
                 const {data: {status, message: url} = {}} = yield call(api.fetchOne);      
                 if (status && status === 'success') {
-                    yield put(createDog({key:'random',url}));
+                    yield put(fetchDogAction({key:'random',url}));
                 } 
             } catch (error) {
                 yield spawn(showMessageSaga, `Fetch random failed!`);
@@ -29,7 +31,7 @@ export function* fetchBreedsSaga(){
         if (R.isNil(breeds) || R.isEmpty(breeds)) {
             const { data: {status, message: breeds} = {}} = yield call(api.fetchBreeds)
             if (status && status === 'success') {
-                yield put(createBreeds(breeds));
+                yield put(fetchBreedsAction(breeds));
             } 
         }
     } catch (error){
@@ -41,18 +43,18 @@ export function* fetchBreedsSaga(){
 export function* fetchBreedWatcher(){
     yield takeLatest(S.SAGA_FETCH_BREED, fetchBreedSaga);
 }
-export function* fetchBreedSaga({payload:{breed}}){
+export function* fetchBreedSaga({payload: breed = ''}){
     try {
         const {data} = yield select(state => state.dogs);
         if(R.isNil(data[breed]) || R.isEmpty(data[breed])){
             const {data: {status, message: urls}} = yield call(api.fetchByBreed, breed);      
             if (status && status === 'success') {
-                yield put(createBreed({breed,urls}));
+                yield put(fetchBreedAction({breed,urls}));
                 yield spawn(showMessageSaga, `Fetched ${urls.length} dogs!`);
             } 
         }
     } catch(error){
-        yield spawn(showMessageSaga, `Fetch breed failed!`);
+        yield spawn(showMessageSaga, `Fetch ${breed} failed!`);
         console.log(error);
     }
 }

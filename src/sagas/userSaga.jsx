@@ -16,7 +16,6 @@ function* signInSaga({payload:username}) {
         yield put({type: T.SIGN_IN, payload:user});
         const  { cachedRedirect = `/` } = yield select(state => state.router.location);
         yield put(push({pathname:cachedRedirect}));
-        // yield put({type:S.SAGA_FETCH_DOG});
         yield spawn (randomDogsSaga);
         yield spawn(showMessageSaga, `Signed in successful!`);        
     } catch (error) {
@@ -59,7 +58,7 @@ function* signOutSaga(){
 export function* forwardRouteWatcher(){
     yield takeLatest(S.SAGA_FORWARD_ROUTE,forwardRouteSaga);
 }
-function* forwardRouteSaga({payload:{pathname = '/'}}){
+function* forwardRouteSaga({payload: pathname = '/'}){
     try {
         yield put(push({pathname})) ;
     } catch(error) {
@@ -84,24 +83,24 @@ export function* historyWatcher(){
 export function* searchWatcher(){
     yield takeLatest(S.SAGA_SEARCH,searchSaga);
 }
-function* searchSaga({payload:{query = ''}}){
+function* searchSaga({payload = ''}){
     try{
-        query = query.trim();
+        const query = payload.trim();
         const breed = query.trim().split(/[- ]+/).map(s=>s.trim()).join('-');
         const {breeds, data} = yield select(state => state.dogs);
         if(hasBreed(breeds, breed)){
-            yield fork(fetchBreedSaga,{payload:{breed}});
-            yield put({type:T.SEARCH,payload:{search:breed}});
+            yield fork(fetchBreedSaga,{payload:breed});
+            yield put({type:T.SEARCH,payload:breed});
         } 
         else if (query === '') {
-            yield put({type:T.SEARCH,payload:{search:''}});
+            yield put({type:T.SEARCH,payload:''});
         }
         else {
-            yield put({type:T.SEARCH,payload:{search:query}});
+            yield put({type:T.SEARCH,payload:query});
             yield spawn(showMessageSaga, `${query} not found.`);
         }
     } catch(error) {
-        yield spawn(showMessageSaga, `Seach ${query} failed.`);
+        yield spawn(showMessageSaga, `Seach ${payload.trim()} failed.`);
         console.log(error);
     }
 }

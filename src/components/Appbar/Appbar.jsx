@@ -83,7 +83,7 @@ class Appbar extends Component {
         }
     } 
     seachInputFocus = () => {
-        if(this.props.path !== '/') this.props.forwardRoute('/');
+        if(this.props.path !== '/') this.props.forwardRouteAction('/');
         this.setState({showBreeds: true});
     }
     onBreed = breed => this.onSearch(breed);
@@ -100,20 +100,25 @@ class Appbar extends Component {
     signout = e => {
         e.stopPropagation();
         this.setState({showBreeds: false});
-        this.props.signOut();
+        this.props.signOutAction();
     }
     matchRoute = (path, route) => path === route || path.split('/')[1] === route.split('/')[1];
 
     select = ({index: selectedIndex, route, label: title}) => {
         this.setState({selectedIndex,title});
-        this.props.forwardRoute(`${route}`);
+        this.props.forwardRouteAction(`${route}`);
     }
 
     showNavigation = () => this.setState({showNav: !this.state.showNav});
 
     showSearch = e => {
         e.stopPropagation();
-        this.setState({search:'',showSearch: !this.state.showSearch, showNav:this.state.showSearch, showBreeds:!this.state.showSearch});
+        this.setState({ 
+            search: '',
+            showSearch: !this.state.showSearch, 
+            showNav:this.state.showSearch, 
+            showBreeds:!this.state.showSearch
+        });
         this.props.searchAction('');
     } 
 
@@ -123,7 +128,9 @@ class Appbar extends Component {
     }
 
     render(){
-        const { breeds, message, clearMessage, path, settings={}, setSettings } = this.props;
+        const { path, breeds, message, settings={} } = this.props;
+        const { clearMessageAction, setSettingsAction } = this.props;
+         
         const { title, search, showNav, showSearch, showBreeds } = this.state;
         return (
             <div style={{marginBottom:4}}>
@@ -172,12 +179,12 @@ class Appbar extends Component {
                     />  
                 }
 
-                <Settings settings={settings} setSettings={setSettings} />            
+                <Settings settings={settings} setSettingsAction={setSettingsAction} />            
 
                 <Snackbar open={!!message}
                           message={message}
                           autoHideDuration={2500}
-                          onRequestClose={clearMessage}/>
+                          onRequestClose={clearMessageAction}/>
             </div>
         )
     }

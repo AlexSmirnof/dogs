@@ -43,6 +43,10 @@ export const favoritesDataSelector = createSelector (
     removedSelector,
     (favorites, removed) => Object.values(favorites).filter(({url})=>!removed[url])
 )
+export const removedDataSelector = createSelector (
+    removedSelector,
+    (removed = {}) => Object.values(removed)
+)
 
 export const dogsSelector = state => state.dogs;
 export const breedsSelector = createSelector (

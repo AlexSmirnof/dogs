@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Grid from '../components/Grid/Grid';
-import { addFavorite, removeFavorite, restoreDog } from '../actions/user';
-import { removedSelector } from '../selectors/selectors';
+import { restoreDogAction, viewAction } from '../actions/actions';
+import { removedDataSelector } from '../selectors/selectors';
+
 
 
 const mapStateToProps = state => ({
-    data: Object.values(removedSelector(state)),
+    data:removedDataSelector(state)
 })
 
-export default connect(mapStateToProps,{ restoreDog })(Grid);
+export default connect(mapStateToProps, { restoreDogAction, viewAction })(Grid);
 

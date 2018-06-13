@@ -1,10 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Grid from '../components/Grid/Grid';
-import { addFavorite, removeFavorite } from '../actions/user';
-import { removeDog } from '../actions/user';
 import { searchDataSelector, favoritesSelector } from '../selectors/selectors';
-
+import { addFavoriteAction, removeFavoriteAction, removeDogAction, viewAction } from '../actions/actions';
 
 
 const mapStateToProps = state => ({
@@ -12,5 +10,5 @@ const mapStateToProps = state => ({
     favorites: favoritesSelector(state)
 })
 
-export default connect(mapStateToProps, { addFavorite, removeFavorite, removeDog })(Grid);
+export default connect(mapStateToProps, { addFavoriteAction, removeFavoriteAction, removeDogAction, viewAction })(Grid);
 

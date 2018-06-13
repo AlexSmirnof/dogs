@@ -16,7 +16,7 @@ class Settings extends Component{
 
 
     settings = (set) => {
-        this.props.setSettings({...this.props.settings,...set});
+        this.props.setSettingsAction({...this.props.settings,...set});
     }
 
 

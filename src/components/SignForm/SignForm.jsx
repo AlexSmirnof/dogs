@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import Snackbar from 'material-ui/Snackbar';
 import { push } from 'react-router-redux';
 
+
 const errorText = 'Your name is required!'
 
 class SignForm extends Component {
@@ -17,7 +18,7 @@ class SignForm extends Component {
     submit = () => {
         const username = this.state.username.trim();
         if (username) {
-            this.props.signIn(username);
+            this.props.signInAction(username);
             this.setState({username:''});
         } else {
             this.setState({errorText});
@@ -31,7 +32,7 @@ class SignForm extends Component {
 
     render(){
 
-        const { signIn, message, clearMessage } = this.props;
+        const { message, signInAction, clearMessageAction } = this.props;
 
         return (
             <div>
@@ -54,7 +55,7 @@ class SignForm extends Component {
                 <Snackbar open={!!message}
                           message={message}
                           autoHideDuration={2500}
-                          onRequestClose={clearMessage}/>
+                          onRequestClose={clearMessageAction}/>
             </div>
         )
     }

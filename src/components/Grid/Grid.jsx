@@ -36,24 +36,24 @@ class Grid extends Component {
 
     favorite = (event, dog) => {
         event.stopPropagation();
-        if(this.props.favorites[dog.url]){
-            this.props.removeFavorite(dog);
+        if(dog && this.props.favorites[dog.url]){
+            this.props.removeFavoriteAction && this.props.removeFavoriteAction(dog);
         } else {
-            this.props.addFavorite(dog);
+            this.props.addFavoriteAction && this.props.addFavoriteAction(dog);
         }
     }
 
     removeOrRestore = (event,dog) => {
         event.stopPropagation();
-        if (this.props.restoreDog) {
-            this.props.restoreDog(dog);
+        if (this.props.restoreDogAction) {
+            this.props.restoreDogAction && this.props.restoreDogAction(dog);
         } else {
-            this.props.removeDog(dog);
+            this.props.removeDogAction && this.props.removeDogAction(dog);
         }
     }
 
     render(){
-        const { data = [], favorites = {}, removed = {}, restoreDog } = this.props;
+        const { data = [], favorites = {}, removed = {}, restoreDogAction } = this.props;
         const { popup } = this.state;
         return (
             <div style={{...styles.root}}>
@@ -73,8 +73,8 @@ class Grid extends Component {
                                         <span style={{color:'white'}}>{type}</span> 
                                         :
                                         <span>
-                                            {(!restoreDog) && <FavStar favorite={favorites[url]} onStar={e=>this.favorite(e,{url,breed})}/>}
-                                            <Remove show={restoreDog} onRemove={e=>this.removeOrRestore(e,{url,breed})} /> 
+                                            {(!restoreDogAction) && <FavStar favorite={favorites[url]} onStar={e=>this.favorite(e,{url,breed})}/>}
+                                            <Remove show={restoreDogAction} onRemove={e=>this.removeOrRestore(e,{url,breed})} /> 
                                          </span>}
                                 onClick={() => this.popup(url)}
                                 >

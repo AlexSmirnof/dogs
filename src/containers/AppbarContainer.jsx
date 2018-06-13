@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { forwardRoute, signOut, clearMessage, setSettings, searchAction } from '../actions/user';
-import Appbar from '../components/Appbar/Appbar';
 import { withRouter } from 'react-router-dom';
+import Appbar from '../components/Appbar/Appbar';
+import { forwardRouteAction, signOutAction, clearMessageAction, setSettingsAction, searchAction } from '../actions/actions';
 import { searchSelector, settingsSelector, messageSelector, pathnameSelector, breedsArraySelector } from '../selectors/selectors';
 
 
 const mapStateToProps = state => ({
-    search: searchSelector(state),
-    settings: settingsSelector(state),
-    message: messageSelector(state),
     path: pathnameSelector(state),
-    breeds:breedsArraySelector(state)
+    search: searchSelector(state),
+    message: messageSelector(state),
+    settings: settingsSelector(state),
+    breeds: breedsArraySelector(state)
 })
 
-export default connect(mapStateToProps,{ forwardRoute, signOut, clearMessage, setSettings, searchAction })(Appbar);
+export default connect(mapStateToProps, { forwardRouteAction, signOutAction, clearMessageAction, setSettingsAction, searchAction })(Appbar);

@@ -22,8 +22,12 @@ class DogsApi {
 
     fetchOne = () => dogCeo(URL.random);
 
-    fetchByBreed = (breed) => dogCeo(URL.byBreed.replace('{breed}', breed));
-
+    fetchByBreed = (Breed) => {
+        if (!Breed) return null;
+        const [ breed, subBreed ] = Breed.trim('-').split('-');
+        if (subBreed && subBreed.trim().length > 0) return this.fetchByBreedAndSubBreed(breed.trim(),subBreed.trim());
+        return dogCeo(URL.byBreed.replace('{breed}', breed.trim()));
+    }
     fetchByBreedAndSubBreed = (breed, subBreed) => dogCeo(URL.bySubBreed.replace('{breed}',breed).replace('{subBreed}',subBreed));
 
 }

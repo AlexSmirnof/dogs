@@ -9,7 +9,7 @@ export default function(state = {breeds:{},data:{}}, {type, payload}) {
         case T.FETCH_BREED: 
             return {...state, data: {...state.data,[payload.breed]:payload.dogs }};   
         case T.FETCH_BREEDS: 
-            return {...state, breeds: {...state.breeds, ...payload.breeds}};              
+            return {...state, breeds: {...state.breeds, ...payload}};              
  
     }
     return state;

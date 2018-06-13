@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { signIn, clearMessage } from '../actions/user';
 import SignForm from '../components/SignForm/SignForm';
 import { messageSelector } from '../selectors/selectors';
+import { signInAction, clearMessageAction } from '../actions/actions';
 
 
-export default connect(state=>({message:messageSelector(state)}), { signIn, clearMessage })(SignForm);
+export default connect(state => ({message: messageSelector(state)}), { signInAction, clearMessageAction })(SignForm);
