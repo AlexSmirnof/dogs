@@ -8,7 +8,7 @@ import createHistory from 'history/createBrowserHistory';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from '../sagas/rootSaga';
 import { routerReducer, routerMiddleware } from 'react-router-redux'
-import { reducers } from '../reducers';
+import * as reducers from './reducers';
 
 
 const history = createHistory();
@@ -33,7 +33,7 @@ export default (initialState = {}) => {
     if (module.hot) {
         module.hot.accept(() => {
           // This fetch the new state of the above reducers.
-          const nextRootReducer = require('../reducers/index')
+          const nextRootReducer = require('./reducers')
           store.replaceReducer(
             persistReducer(persistConfig, nextRootReducer)
           )

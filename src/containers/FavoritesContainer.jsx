@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import View from '../components/View/View';
 import Grid from '../components/Grid/Grid';
-import { removeFavoriteAction, removeDogAction, viewAction } from '../actions/actions';
-import { favoritesSelector, settingsSelector, removedSelector, favoritesDataSelector } from '../selectors/selectors';
+import { removeFavoriteAction, removeDogAction, viewAction } from '../redux/actions';
+import { favoritesSelector, settingsSelector, removedSelector, favoritesDataSelector } from '../redux/selectors';
 
 
 

@@ -36,17 +36,17 @@ class View extends Component {
     }
     favorite = (dog) => {
         if(this.props.favorites[dog.url]){
-            this.props.removeFavorite(dog);
+            this.props.removeFavoriteAction(dog);
         } else {
-            this.props.addFavorite(dog);
+            this.props.addFavoriteAction(dog);
         }
     }
     
     render(){
         let {index,popup} = this.state;
-        const { data = [], favorites, addFavorite, removeFavorite, removeDog } = this.props;
-        if (data.length === 0) return null;
-        const dog = data[index] || {};
+        const { data = [], favorites, removeDogAction } = this.props;
+        if (data.length === 0 || !data[index]) return null;
+        const dog = data[index];
         return (
             <div>
                 <div style={{minHeight:700,display:'flex', justifyContent:'space-evenly',alignItems:'center'}}>
@@ -68,7 +68,7 @@ class View extends Component {
                                             subtitle={<span>from <a href={dog.url} target="blank" onClick={e=>e.stopPropagation()}>{extractHost(dog.url)}</a></span>} 
                                             children={<div style={{position:'absolute',right:0,top:15}}>
                                                 <FavStar favorite={favorites[dog.url]} onStar={()=>this.favorite(dog)}/>
-                                                <Remove onRemove={()=>removeDog(dog)} />
+                                                <Remove onRemove={()=>removeDogAction(dog)} />
                                             </div>}
                                             />}     
                             >

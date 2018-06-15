@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Grid from '../components/Grid/Grid';
-import { restoreDogAction, viewAction } from '../actions/actions';
-import { removedDataSelector } from '../selectors/selectors';
+import { restoreDogAction, viewAction } from '../redux/actions';
+import { removedDataSelector } from '../redux/selectors';
 
 
 

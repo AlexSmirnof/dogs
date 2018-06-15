@@ -5,7 +5,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Main from '../layouts/Main';
 import SignFormContainer from '../containers/SignFormContainer';
-import Store from '../store/store';
+import Store from '../redux/store';
 import AuthRoute from '../components/AuthRoute/AuthRoute';
 import { ConnectedRouter } from 'react-router-redux';
 import './css/App.css';

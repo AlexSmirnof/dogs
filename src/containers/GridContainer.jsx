@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Grid from '../components/Grid/Grid';
-import { searchDataSelector, favoritesSelector } from '../selectors/selectors';
-import { addFavoriteAction, removeFavoriteAction, removeDogAction, viewAction } from '../actions/actions';
+import { searchDataSelector, favoritesSelector } from '../redux/selectors';
+import { addFavoriteAction, removeFavoriteAction, removeDogAction, viewAction } from '../redux/actions';
 
 
 const mapStateToProps = state => ({

@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import View from '../components/View/View';
 import Grid from '../components/Grid/Grid';
 import { BreedsList } from '../components/BreedsList/BreedsList';
-import { forwardRouteAction, addFavoriteAction, removeFavoriteAction, removeDogAction, viewAction, sagaFetchBreedAction } from '../actions/actions';
-import { settingsSelector, favoritesSelector, removedSelector,  galleryhDataSelector, breedsArraySelector } from '../selectors/selectors';
+import { forwardRouteAction, addFavoriteAction, removeFavoriteAction, removeDogAction, viewAction, sagaFetchBreedAction } from '../redux/actions';
+import { settingsSelector, favoritesSelector, removedSelector,  galleryhDataSelector, breedsArraySelector } from '../redux/selectors';
 
 
 class GalleryContainer extends Component {

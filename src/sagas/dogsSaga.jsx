@@ -1,9 +1,8 @@
 import * as R from 'ramda';
 import api from "../api/api";
+import { createAction } from 'redux-actions';
 import {  call, put, select, take, takeLatest, spawn } from 'redux-saga/effects';
-import { Types as T, SagaTypes as S } from '../actions/types';
-// import { createDog, createBreed, createBreeds } from '../actions/dogs';
-import { fetchDogAction, fetchBreedAction, fetchBreedsAction } from '../actions/actions';
+import { fetchDogAction, fetchBreedAction, fetchBreedsAction, SAGA_FETCH_BREED, SHOW_MESSAGE  } from '../redux/actions';
 
 
 
@@ -41,7 +40,7 @@ export function* fetchBreedsSaga(){
 
 }
 export function* fetchBreedWatcher(){
-    yield takeLatest(S.SAGA_FETCH_BREED, fetchBreedSaga);
+    yield takeLatest(SAGA_FETCH_BREED, fetchBreedSaga);
 }
 export function* fetchBreedSaga({payload: breed = ''}){
     try {
@@ -61,5 +60,5 @@ export function* fetchBreedSaga({payload: breed = ''}){
 
 
 function* showMessageSaga(message) {
-    yield put({type: T.SHOW_MESSAGE, payload:{message}});
+    yield put(createAction(SHOW_MESSAGE)({message}));
 }
