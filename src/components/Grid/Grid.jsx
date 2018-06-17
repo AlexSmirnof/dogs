@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
-import {GridList, GridTile} from 'material-ui/GridList';
+import {GridList} from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
-import IconButton from 'material-ui/IconButton';
 import Popup from '../Popup/Popup';
-import { StarBorder, Star, Delete, Replay } from '@material-ui/icons';
 import { extractHost, capitalize } from '../../utils/utils';
 import { BreedsList } from '../BreedsList/BreedsList';
+import GridItem from './GridItem';
 
 
 const styles = {
@@ -34,8 +33,7 @@ class Grid extends Component {
 
     closePopup = () => this.setState({popup:null});
 
-    favorite = (event, dog) => {
-        event.stopPropagation();
+    favorite = dog => {
         if(dog && this.props.favorites[dog.url]){
             this.props.removeFavoriteAction && this.props.removeFavoriteAction(dog);
         } else {
@@ -43,14 +41,9 @@ class Grid extends Component {
         }
     }
 
-    removeOrRestore = (event,dog) => {
-        event.stopPropagation();
-        if (this.props.restoreDogAction) {
-            this.props.restoreDogAction && this.props.restoreDogAction(dog);
-        } else {
-            this.props.removeDogAction && this.props.removeDogAction(dog);
-        }
-    }
+    remove = dog => this.props.removeDogAction && this.props.removeDogAction(dog);
+
+    restore = dog => this.props.restoreDogAction && this.props.restoreDogAction(dog);
 
     render(){
         const { data = [], favorites = {}, removed = {}, restoreDogAction } = this.props;
@@ -63,23 +56,19 @@ class Grid extends Component {
                         cellHeight={200}
                         >
                     {data.map(({url,breed,type},index) => (
-                        <GridTile
-                                key={`${url}-${index}`}
-                                title={capitalize(breed)}
-                                subtitle={<span>from <a href={url} target="blank" onClick={e=>e.stopPropagation()}>{extractHost(url)}</a></span>}
-                                actionIcon={
-                                        type 
-                                        ? 
-                                        <span style={{color:'white'}}>{type}</span> 
-                                        :
-                                        <span>
-                                            {(!restoreDogAction) && <FavStar favorite={favorites[url]} onStar={e=>this.favorite(e,{url,breed})}/>}
-                                            <Remove show={restoreDogAction} onRemove={e=>this.removeOrRestore(e,{url,breed})} /> 
-                                         </span>}
-                                onClick={() => this.popup(url)}
-                                >
-                            <img src={url}/>
-                        </GridTile>
+                        <GridItem 
+                            key={`${url}-${index}`}
+                            url={url}
+                            title={capitalize(breed)}
+                            host={extractHost(url)}
+                            type={type}
+                            isTrash={!!restoreDogAction}
+                            isFavorite={favorites[url]}
+                            onFavorite={()=>this.favorite({url,breed})}
+                            onRemove={()=>this.remove({url,breed})}
+                            onRestore={()=>this.restore({url,breed})}
+                            onClick={() => this.popup(url)}
+                            />
                     ))}
                 </GridList>
                 {popup && <Popup item={popup} close={this.closePopup}/>}
@@ -88,26 +77,6 @@ class Grid extends Component {
     }
 
 }
-
-const CommonStyle = {
-    color:'rgb(255,255,255)',
-    marginRight:-20
-}
-const FavStar = ({favorite, onStar}) => (
-    <IconButton 
-        style={CommonStyle}
-        onClick={onStar}
-        >
-        {favorite?<Star/>:<StarBorder/>}
-    </IconButton>  
-)
-
-const Remove = ({show, onRemove}) => (
-    <IconButton style={{...CommonStyle,marginRight:-8}}
-        onClick={onRemove} >
-        {show ? <Replay/> : <Delete/>}
-    </IconButton>
-)
 
 
 export default Grid;

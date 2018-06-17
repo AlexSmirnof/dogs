@@ -14,6 +14,7 @@ export function* signInWatcher() {
 function* signInSaga({payload:username}) {
     try {
         const user = yield call([AuthManager,AuthManager.signInUser], username);
+        console.log("USER", user)
         yield put(createAction(A.SIGN_IN)(user));
         const  { cachedRedirect = `/` } = yield select(state => state.router.location);
         yield put(push({pathname:cachedRedirect}));

@@ -1,7 +1,7 @@
-import { handleAction } from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import * as A from './actions';
 
-export const dogs =  handleAction(
+export const dogs =  handleActions(
 {
     [A.fetchDogAction]: (state, {payload}) => {
         const prevKey = state.data[payload.key] || [];
@@ -13,11 +13,12 @@ export const dogs =  handleAction(
     [A.fetchBreedsAction]: (state, {payload}) => {
         return {...state, breeds: {...state.breeds, ...payload}};              
     }
-}, {});
+}, 
+{data:{},breeds:{}});
 
 
-export const user = handleAction({
-    [A.signInAction]: (_, {payload}) => ({...payload}),
+export const user = handleActions({
+    [A.SIGN_IN]: (_, {payload}) => ({...payload}),
     [A.signOutAction]: () => ({}),
     [A.SHOW_MESSAGE]: (state, {payload}) => {
         return {...state, message: payload ? payload.message: null};
