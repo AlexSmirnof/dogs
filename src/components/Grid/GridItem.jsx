@@ -4,7 +4,6 @@ import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import { StarBorder, Star, Delete, Replay } from '@material-ui/icons';
 
-let count = 0;
 
 export default class extends Component {
 
@@ -28,7 +27,6 @@ export default class extends Component {
 
     render (){
         const { key, url, title, host, type, isTrash, isFavorite, onClick } = this.props;
-console.log(count++);
         return (
             <GridTile
                     key={key}
