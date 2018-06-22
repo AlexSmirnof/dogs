@@ -12,6 +12,9 @@ export const dogs =  handleActions(
     },
     [A.fetchBreedsAction]: (state, {payload}) => {
         return {...state, breeds: {...state.breeds, ...payload}};              
+    },
+    [A.FETCH_MORE_DOGS]: (state, {payload}) => {
+        return {...state, data: {...state.data, random:[...state.data.random,...payload]}};
     }
 }, 
 {data:{},breeds:{}});

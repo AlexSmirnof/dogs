@@ -11,7 +11,7 @@ const URL = {
 
 const dogCeo = axios.create({
     baseURL: URL.base,
-    timeout: 1500    
+    timeout: 2000    
 })
 
 class DogsApi {
@@ -21,6 +21,8 @@ class DogsApi {
     fetchSubBreeds = () => dogCeo(URL.subBreeds);
 
     fetchOne = () => dogCeo(URL.random);
+
+    fetchMore = (length=1) => axios.all(Array.from({length},_=>dogCeo(URL.random)));
 
     fetchByBreed = (Breed) => {
         if (!Breed) return null;

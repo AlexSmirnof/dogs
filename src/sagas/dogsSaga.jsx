@@ -1,13 +1,12 @@
 import * as R from 'ramda';
 import api from "../api/api";
 import { createAction } from 'redux-actions';
-import {  call, put, select, take, takeLatest, spawn } from 'redux-saga/effects';
-import { fetchDogAction, fetchBreedAction, fetchBreedsAction, SAGA_FETCH_BREED, SHOW_MESSAGE  } from '../redux/actions';
+import {  call, put, select, take, takeLatest, takeEvery, spawn } from 'redux-saga/effects';
+import { fetchDogAction, fetchBreedAction, fetchBreedsAction, SAGA_FETCH_BREED, fetchMoreDogsAction, SAGA_FETCH_MORE_DOGS, SHOW_MESSAGE  } from '../redux/actions';
 
 
 
-export function* randomDogsSaga(limit = 20){
-
+export function* randomDogsSaga(limit = 40){
     const {random} =  yield select(state => state.dogs.data);
     if (R.isNil(random) || R.isEmpty(random)){
         for(let i = 0; i < limit; i++){
@@ -58,6 +57,23 @@ export function* fetchBreedSaga({payload: breed = ''}){
     }
 }
 
+export function* fetchMoreDogsWatcher(){
+    yield takeEvery(SAGA_FETCH_MORE_DOGS, fetchMoreDogs);
+}
+export function* fetchMoreDogs({payload: size = 1}){
+    try {
+        const results = yield call(api.fetchMore, size); 
+        console.log('ALL', results);   
+        const data = results
+            .filter(({data:{status}={}}) => status && status === 'success')
+            .map(({data:{message}})=>message);
+        console.log('lenght', data.length);               
+        yield put(fetchMoreDogsAction(data));
+    } catch (error) {
+        yield spawn(showMessageSaga, `Fetch more failed!`);
+        console.log(error);
+    }
+}
 
 function* showMessageSaga(message) {
     yield put(createAction(SHOW_MESSAGE)({message}));
