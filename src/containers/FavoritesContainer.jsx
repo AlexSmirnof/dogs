@@ -4,8 +4,10 @@ import View from '../components/View/View';
 import Grid from '../components/Grid/Grid';
 import { removeFavoriteAction, removeDogAction, viewAction } from '../redux/actions';
 import { favoritesSelector, settingsSelector, removedSelector, favoritesDataSelector } from '../redux/selectors';
+import LazyScrollHOC from '../components/LazyScrollHOC/LazyScrollHOC';
 
 
+const LazyGrid = LazyScrollHOC(Grid);
 
 const FavoritesContainer = ({ 
     settings:{grid,slides,autoplay}, 
@@ -29,7 +31,7 @@ const FavoritesContainer = ({
             }
             {    
                 grid &&
-                <Grid 
+                <LazyGrid 
                     data={data} 
                     favorites={favorites}
                     removeFavoriteAction={removeFavoriteAction}

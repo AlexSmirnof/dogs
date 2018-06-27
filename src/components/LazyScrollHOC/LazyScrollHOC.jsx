@@ -10,11 +10,10 @@ const LazyScroll = ScrolledComponent =>
 
         state = {
             limit: 40,
-            step: 2
+            step: 3
         }
 
         componentDidMount(){
-            console.log('did mount');
             window.addEventListener('scroll', this.handleScroll);
         }
         componentWillUnmount(){
@@ -38,7 +37,7 @@ const LazyScroll = ScrolledComponent =>
                 if (limit < length){
                     this.setState({limit:limit+step});
                 } 
-                else if (this.isRandomData){
+                else if (this.props.sagaFetchMoreDogsAction && this.isRandomData()){
                     this.props.sagaFetchMoreDogsAction(step);
                     this.setState({limit:limit+step});                
                 }               
@@ -46,8 +45,8 @@ const LazyScroll = ScrolledComponent =>
         }
 
         isRandomData = () => {
-            const { search = '' } = this.props;
-            return search === 'random' || search === '';
+            const { search } = this.props;
+            return !!search && (search === 'random' || search === '');
         }
 
         render(){

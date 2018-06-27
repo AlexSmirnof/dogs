@@ -6,7 +6,12 @@ import Grid from '../components/Grid/Grid';
 import { BreedsList } from '../components/BreedsList/BreedsList';
 import { forwardRouteAction, addFavoriteAction, removeFavoriteAction, removeDogAction, viewAction, sagaFetchBreedAction } from '../redux/actions';
 import { settingsSelector, favoritesSelector, removedSelector,  galleryhDataSelector, breedsArraySelector } from '../redux/selectors';
+import LazyScrollHOC from '../components/LazyScrollHOC/LazyScrollHOC';
+import AutoplayHOC from '../components/AutoplayHOC/AutoplayHOC';
 
+
+const LazyGrid = LazyScrollHOC(Grid);
+const AutoplayView = AutoplayHOC(View);
 
 class GalleryContainer extends Component {
 
@@ -27,7 +32,7 @@ class GalleryContainer extends Component {
                 <div>
                 {
                     slides &&
-                    <View
+                    <AutoplayView
                         autoplay={autoplay}
                         data={data} 
                         favorites={favorites}
@@ -39,7 +44,7 @@ class GalleryContainer extends Component {
                 }
                 {    
                     grid &&
-                    <Grid 
+                    <LazyGrid 
                         data={data} 
                         favorites={favorites}
                         addFavoriteAction={addFavoriteAction} 
