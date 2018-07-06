@@ -21,6 +21,7 @@ const LazyScroll = ScrolledComponent =>
         }
 
         handleScroll = e => {
+            const { sagaFetchMoreDogsAction } = this.props;
             const clientHeight = window.document.body.clientHeight;
             const scrollTop = window.document.scrollingElement.scrollTop;
             const { data:{length}, search } = this.props;
@@ -37,16 +38,16 @@ const LazyScroll = ScrolledComponent =>
                 if (limit < length){
                     this.setState({limit:limit+step});
                 } 
-                else if (this.props.sagaFetchMoreDogsAction && this.isRandomData()){
-                    this.props.sagaFetchMoreDogsAction(step);
+                else if (sagaFetchMoreDogsAction && this.isRandomData()){
+                    sagaFetchMoreDogsAction(step);
                     this.setState({limit:limit+step});                
                 }               
             }
         }
 
         isRandomData = () => {
-            const { search } = this.props;
-            return !!search && (search === 'random' || search === '');
+            const { search = "" } = this.props;
+            return search === ''  || search === 'random';
         }
 
         render(){
