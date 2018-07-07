@@ -28,12 +28,6 @@ const LazyScroll = ScrolledComponent =>
             const { limit, step } = this.state;
             const restRowNumber = Math.round((clientHeight - scrollTop)/200);
 
-            console.log('length',length);
-            console.log('limit',limit);
-            console.log('restRowNumber',restRowNumber);            
-            console.log('clientHeight',clientHeight);                             
-            console.log('scrollTop',scrollTop);
-
             if (restRowNumber < 6){
                 if (limit < length){
                     this.setState({limit:limit+step});

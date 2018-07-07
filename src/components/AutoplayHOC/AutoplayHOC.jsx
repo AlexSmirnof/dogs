@@ -1,8 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-
-const headerHeight = 64;
-const itemHeight = 200;
 
 const AutoplayHOC = ViewedComponent => 
     

@@ -27,6 +27,7 @@ export default class extends Component {
 
     render (){
         const { key, url, title, host, type, isTrash, isFavorite, onClick } = this.props;
+        const colorWhite = {color:'white'};
         return (
             <GridTile
                     key={key}
@@ -35,7 +36,7 @@ export default class extends Component {
                     actionIcon={
                             type 
                             ? 
-                            <span style={{color:'white'}}>{type}</span> 
+                            <span style={colorWhite}>{type}</span> 
                             :
                             <span>
                                 {
@@ -84,3 +85,4 @@ const Restore = ({onRestore}) => (
         <Replay/>
     </IconButton>
 )
+

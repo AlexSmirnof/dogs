@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import Appbar from '../components/Appbar/Appbar';
 import { forwardRouteAction, signOutAction, clearMessageAction, setSettingsAction, searchAction } from '../redux/actions';
 import { searchSelector, settingsSelector, messageSelector, pathnameSelector, breedsArraySelector } from '../redux/selectors';
