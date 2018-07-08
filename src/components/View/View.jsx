@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card, CardMedia, CardTitle } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
 import { StarBorder, Star, Delete } from '@material-ui/icons';
 import { extractHost, capitalize } from '../../utils/utils';
-import Toggle from 'material-ui/Toggle';
+
 
 class View extends Component {
     
@@ -43,7 +43,7 @@ class View extends Component {
     }
     
     render(){
-        let {index,popup} = this.state;
+        let {index} = this.state;
         const { data = [], favorites, removeDogAction } = this.props;
         if (data.length === 0 || !data[index]) return null;
         const dog = data[index];

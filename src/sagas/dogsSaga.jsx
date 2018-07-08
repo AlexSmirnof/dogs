@@ -62,12 +62,10 @@ export function* fetchMoreDogsWatcher(){
 }
 export function* fetchMoreDogs({payload: size = 1}){
     try {
-        const results = yield call(api.fetchMore, size); 
-        console.log('ALL', results);   
+        const results = yield call(api.fetchMore, size);    
         const data = results
             .filter(({data:{status}={}}) => status && status === 'success')
-            .map(({data:{message}})=>message);
-        console.log('lenght', data.length);               
+            .map(({data:{message}})=>message);           
         yield put(fetchMoreDogsAction(data));
     } catch (error) {
         yield spawn(showMessageSaga, `Fetch more failed!`);

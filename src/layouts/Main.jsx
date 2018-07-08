@@ -1,7 +1,6 @@
 import React from 'react';
 import Loadable from 'react-loadable';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Grid from '../components/Grid/Grid';
 import AuthRoute from '../components/AuthRoute/AuthRoute';
 import AppbarContainer from '../containers/AppbarContainer';
 

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
 
-const headerHeight = 64;
-const itemHeight = 200;
 
 const LazyScroll = ScrolledComponent => 
     
@@ -24,7 +22,7 @@ const LazyScroll = ScrolledComponent =>
             const { sagaFetchMoreDogsAction } = this.props;
             const clientHeight = window.document.body.clientHeight;
             const scrollTop = window.document.scrollingElement.scrollTop;
-            const { data:{length}, search } = this.props;
+            const { data:{length} } = this.props;
             const { limit, step } = this.state;
             const restRowNumber = Math.round((clientHeight - scrollTop)/200);
 

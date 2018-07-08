@@ -1,26 +1,23 @@
-import React, {Component} from 'react';
-import {List, ListItem} from 'material-ui/List';
+import React from 'react';
+import {ListItem} from 'material-ui/List';
 import {
     Table,
     TableBody,
-    TableHeader,
-    TableHeaderColumn,
-    TableRow,
     TableRowColumn,
   } from 'material-ui/Table';
   import { capitalize } from '../../utils/utils';
 
 
 
-export const BreedsList = ({breeds, count = 0, onBreed, onSubBreed}) => (
+export const BreedsList = ({breeds, count = 0, onBreed}) => (
         <Table style={{marginLeft:15}}>
             <TableBody valign="top" displayRowCheckbox={false}>
-                <TableRowColumn><BreedItems breeds={breeds.slice(count,count+=21)} onBreed={onBreed} onSubBreed={onSubBreed}/></TableRowColumn>
-                <TableRowColumn><BreedItems breeds={breeds.slice(count,count+=15)} onBreed={onBreed} onSubBreed={onSubBreed}/></TableRowColumn>
-                <TableRowColumn><BreedItems breeds={breeds.slice(count,count+=19)} onBreed={onBreed} onSubBreed={onSubBreed}/></TableRowColumn>
-                <TableRowColumn><BreedItems breeds={breeds.slice(count,count+=13)} onBreed={onBreed} onSubBreed={onSubBreed}/></TableRowColumn>
-                <TableRowColumn><BreedItems breeds={breeds.slice(count,count+=9)} onBreed={onBreed} onSubBreed={onSubBreed}/></TableRowColumn>
-                <TableRowColumn><BreedItems breeds={breeds.slice(count,count+=5)} onBreed={onBreed} onSubBreed={onSubBreed}/></TableRowColumn>
+                <TableRowColumn><BreedItems breeds={breeds.slice(count,count+=21)} onBreed={onBreed} /></TableRowColumn>
+                <TableRowColumn><BreedItems breeds={breeds.slice(count,count+=15)} onBreed={onBreed} /></TableRowColumn>
+                <TableRowColumn><BreedItems breeds={breeds.slice(count,count+=19)} onBreed={onBreed} /></TableRowColumn>
+                <TableRowColumn><BreedItems breeds={breeds.slice(count,count+=13)} onBreed={onBreed} /></TableRowColumn>
+                <TableRowColumn><BreedItems breeds={breeds.slice(count,count+=9)} onBreed={onBreed} /></TableRowColumn>
+                <TableRowColumn><BreedItems breeds={breeds.slice(count,count+=5)} onBreed={onBreed} /></TableRowColumn>
             </TableBody>
         </Table>  
 )
@@ -31,7 +28,7 @@ const BreedItemsStyle = {
     height:40
 }
 
-const BreedItems = ({breeds=[], onBreed=()=>{}, onSubBreed=()=>{}}) => [
+const BreedItems = ({ breeds=[], onBreed=()=>{} }) => [
             breeds.map(({breed,subBreeds},idx) => {
                 const hasSubBreeds = subBreeds.length > 0;
                 if(hasSubBreeds){
@@ -48,7 +45,7 @@ const BreedItems = ({breeds=[], onBreed=()=>{}, onSubBreed=()=>{}}) => [
                                     key={`${subBreed}-${idx}`}
                                     style={{...BreedItemsStyle}}
                                     primaryText={capitalize(subBreed)}
-                                    onClick={()=>onSubBreed(`${breed}-${subBreed}`)}
+                                    onClick={()=>onBreed(`${breed}-${subBreed}`)}
                                     />
                             ))]}
                             />

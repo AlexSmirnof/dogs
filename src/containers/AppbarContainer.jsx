@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import Appbar from '../components/Appbar/Appbar';
 import { forwardRouteAction, signOutAction, clearMessageAction, setSettingsAction, searchAction } from '../redux/actions';

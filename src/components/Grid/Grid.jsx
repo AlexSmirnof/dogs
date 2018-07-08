@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
 import {GridList} from 'material-ui/GridList';
-import Subheader from 'material-ui/Subheader';
 import Popup from '../Popup/Popup';
 import { extractHost, capitalize } from '../../utils/utils';
-import { BreedsList } from '../BreedsList/BreedsList';
 import GridItem from './GridItem';
 
 
@@ -46,7 +43,7 @@ class Grid extends Component {
     restore = dog => this.props.restoreDogAction && this.props.restoreDogAction(dog);
 
     render(){
-        const { data = [], favorites = {}, removed = {}, restoreDogAction } = this.props;
+        const { data = [], favorites = {}, restoreDogAction, fetchBreed, forwardBreed } = this.props;
         const { popup } = this.state;
         return (
             <div style={{...styles.root}}>
@@ -67,6 +64,8 @@ class Grid extends Component {
                             onFavorite={()=>this.favorite({url,breed})}
                             onRemove={()=>this.remove({url,breed})}
                             onRestore={()=>this.restore({url,breed})}
+                            forwardBreed={forwardBreed}
+                            fetchBreed={fetchBreed}
                             onClick={() => this.popup(url)}
                             />
                     ))}

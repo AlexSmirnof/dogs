@@ -19,13 +19,9 @@ class GalleryContainer extends Component {
         this.props.sagaFetchBreedAction(breed);
         this.props.forwardRouteAction(`${this.props.match.url}/${breed}`);
     }
-    onSubBreed = (fullBreed) => {
-        this.props.sagaFetchBreedAction(fullBreed);        
-        this.props.forwardRouteAction(`${this.props.match.url}/${fullBreed}`);
-    }    
 
     render(){
-        const { settings: {grid,slides,autoplay}={}, data, breeds, favorites, removed, match } = this.props;
+        const { settings: {grid,slides,autoplay}={}, data, breeds, favorites, match } = this.props;
         const { addFavoriteAction, removeFavoriteAction, removeDogAction, viewAction } = this.props;
         if (match.params.breed){
             return (
@@ -60,7 +56,6 @@ class GalleryContainer extends Component {
             <BreedsList 
                 breeds={breeds} 
                 onBreed={this.onBreed} 
-                onSubBreed={this.onSubBreed}
                 />  
         )
 

@@ -1,4 +1,3 @@
-import * as R from 'ramda';
 import AuthManager from '../auth/auth';
 import { push } from 'react-router-redux';
 import { createAction } from 'redux-actions';
@@ -89,7 +88,7 @@ function* searchSaga({payload = ''}){
     try{
         const query = payload.trim();
         const breed = query.trim().split(/[- ]+/).map(s=>s.trim()).join('-');
-        const {breeds, data} = yield select(state => state.dogs);
+        const {breeds} = yield select(state => state.dogs);
         if(hasBreed(breeds, breed)){
             yield fork(fetchBreedSaga,{payload:breed});
             yield put(createAction(A.SEARCH)(breed));

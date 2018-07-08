@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import LoadingImage from '../LoadingImage/LoadingImage';
-import {GridList, GridTile} from 'material-ui/GridList';
+import {GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import { StarBorder, Star, Delete, Replay } from '@material-ui/icons';
 
@@ -24,14 +24,22 @@ export default class extends Component {
         e.stopPropagation();
         this.props.onRestore();
     }
+    onTitle = ({event,title}) => {
+        event && event.preventDefault();
+        event && event.stopPropagation();
+        title && this.props.fetchBreed && this.props.fetchBreed(title.toLowerCase());
+        title && this.props.forwardBreed && this.props.forwardBreed(`gallery/${title.toLowerCase()}`);
+    }
 
     render (){
         const { key, url, title, host, type, isTrash, isFavorite, onClick } = this.props;
         const colorWhite = {color:'white'};
+        const textDecoration = {textDecoration:'none'};
+        
         return (
             <GridTile
                     key={key}
-                    title={title}
+                    title={<a href="" style={textDecoration} onClick={event=>this.onTitle({event,title})}>{title}</a>}
                     subtitle={<span>from <a href={url} target="blank" onClick={e=>e.stopPropagation()}>{host}</a></span>}
                     actionIcon={
                             type 

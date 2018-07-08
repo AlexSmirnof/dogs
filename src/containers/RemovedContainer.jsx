@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import Grid from '../components/Grid/Grid';
 import { restoreDogAction, viewAction } from '../redux/actions';

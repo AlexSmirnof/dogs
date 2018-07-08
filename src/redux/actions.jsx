@@ -1,5 +1,5 @@
 import { createAction } from 'redux-actions';
-import { extractBreed, extractSubBreed } from '../utils/utils';
+import { extractBreed } from '../utils/utils';
 
 export const FETCH_MORE_DOGS = 'FETCH_MORE_DOGS';
 export const SHOW_MESSAGE = 'SHOW_MESSAGE';
@@ -37,11 +37,7 @@ export const SAGA_FORWARD_ROUTE = 'SAGA_FORWARD_ROUTE';
 export const SAGA_SIGN_OUT = 'SAGA_SIGN_OUT';
 export const SAGA_AUTHENTICATE_USER = 'SAGA_AUTHENTICATE_USER';
 export const SAGA_SIGN_IN = 'SAGA_SIGN_IN';
-const SAGA_ADD_FAVORITE = 'SAGA_ADD_FAVORITE';
-const SAGA_REMOVE_FAVORITE = 'SAGA_REMOVE_FAVORITE';
 export const SAGA_FETCH_MORE_DOGS = 'SAGA_FETCH_MORE_DOGS';
-const SAGA_FETCH_DOG = 'SAGA_FETCH_DOG';
-const SAGA_FETCH_BREEDS = 'SAGA_FETCH_BREEDS';
 
 export const searchAction = createAction(SAGA_SEARCH);
 export const signInAction = createAction(SAGA_SIGN_IN);

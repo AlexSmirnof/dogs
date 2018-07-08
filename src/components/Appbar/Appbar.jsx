@@ -37,7 +37,6 @@ const style = {
         paddingLeft: 5,
         alignItems:'center', 
         height:64, 
-        height:64,
         position:'fixed',
         width:'100%',
         top:0,

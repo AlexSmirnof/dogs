@@ -3,7 +3,6 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Snackbar from 'material-ui/Snackbar';
-import { push } from 'react-router-redux';
 
 
 const errorText = 'Your name is required!'
@@ -32,7 +31,7 @@ class SignForm extends Component {
 
     render(){
 
-        const { message, signInAction, clearMessageAction } = this.props;
+        const { message, clearMessageAction } = this.props;
 
         return (
             <div>
