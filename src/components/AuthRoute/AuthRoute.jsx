@@ -8,7 +8,6 @@ class AuthRoute extends Component{
 
     static getDerivedStateFromProps({pathname = '/', authenticateUserAction=()=>{}, roles='user'}, state){
         authenticateUserAction({roles,cachedRedirect:pathname});
-        return state;
     }
 
  

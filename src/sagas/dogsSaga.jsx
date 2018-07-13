@@ -24,12 +24,13 @@ export function* randomDogsSaga(limit = 40){
     }
 }
 export function* fetchBreedsSaga(){
-    const {payload: {dogs: {breeds} = {}} = {}} = yield take("persist/REHYDRATE");
     try {
+        const {breeds = {}} = yield select(state => state.dogs);
         if (R.isNil(breeds) || R.isEmpty(breeds)) {
             const { data: {status, message: breeds} = {}} = yield call(api.fetchBreeds)
             if (status && status === 'success') {
                 yield put(fetchBreedsAction(breeds));
+                yield spawn(showMessageSaga, `Fetch breeds success!`);
             } 
         }
     } catch (error){

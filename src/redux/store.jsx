@@ -1,7 +1,4 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';// defaults to localStorage
-import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createHistory from 'history/createBrowserHistory';
@@ -9,40 +6,33 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from '../sagas/rootSaga';
 import { routerReducer, routerMiddleware } from 'react-router-redux'
 import * as reducers from './reducers';
+import { persistState, replaceReducers } from './middlewares';
 
 
 const history = createHistory();
-const persistConfig = {
-    key: 'root',
-    storage
-}
+const sagaMiddleware = createSagaMiddleware();
 const routedReducers = combineReducers({
   ...reducers,
   router: routerReducer
 })
-const sagaMiddleware = createSagaMiddleware();
-const persistedReducer = persistReducer(persistConfig, routedReducers);
+const getInitialState = key => {
+    if(localStorage && key){
+      const rehydrated = localStorage.getItem(key);
+      return rehydrated ? JSON.parse(rehydrated) : {};
+    }
+    return {};
+}
 
 
-export default (initialState = {}) => {
 
-    const store = createStore(persistedReducer, initialState, 
-      composeWithDevTools(applyMiddleware(sagaMiddleware, routerMiddleware(history), thunk, logger )));
-    const persistor = persistStore(store);
+export default (initialState = getInitialState('dogs:state')) => {
 
-    if (module.hot) {
-        module.hot.accept(() => {
-          // This fetch the new state of the above reducers.
-          const nextRootReducer = require('./reducers')
-          store.replaceReducer(
-            persistReducer(persistConfig, nextRootReducer)
-          )
-        })
-      }
+    const store = createStore(routedReducers, initialState, 
+      composeWithDevTools(applyMiddleware( logger, replaceReducers, persistState, sagaMiddleware, routerMiddleware(history))));
 
     sagaMiddleware.run(rootSaga);
     
-    return { store, persistor, history };
+    return { store, history };
 }
 
 

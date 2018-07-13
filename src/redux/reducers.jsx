@@ -22,7 +22,7 @@ export const dogs =  handleActions(
 
 export const user = handleActions({
     [A.SIGN_IN]: (_, {payload}) => ({...payload}),
-    [A.signOutAction]: () => ({}),
+    [A.SIGN_OUT]: () => ({}),
     [A.SHOW_MESSAGE]: (state, {payload}) => {
         return {...state, message: payload ? payload.message: null};
     },

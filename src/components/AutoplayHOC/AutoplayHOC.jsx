@@ -8,7 +8,7 @@ const AutoplayHOC = ViewedComponent =>
                 this.clear = setInterval(this.play, 3000);
             }
         }
-        componentWillUnmount(){
+        componentDidUnmount(){
             this.clear && clearInterval(this.clear);
         }
 

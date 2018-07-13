@@ -1,4 +1,4 @@
-import AuthManager from '../auth/auth';
+import Auth from '../auth/auth';
 import { push } from 'react-router-redux';
 import { createAction } from 'redux-actions';
 import {  call, put, take, select, takeLatest, fork, spawn, actionChannel } from 'redux-saga/effects';
@@ -12,8 +12,7 @@ export function* signInWatcher() {
 }
 function* signInSaga({payload:username}) {
     try {
-        const user = yield call([AuthManager,AuthManager.signInUser], username);
-        console.log("USER", user)
+        const user = yield call([Auth,Auth.signInUser], username);
         yield put(createAction(A.SIGN_IN)(user));
         const  { cachedRedirect = `/` } = yield select(state => state.router.location);
         yield put(push({pathname:cachedRedirect}));
@@ -31,7 +30,7 @@ export function* authenticateRouteWatcher(){
 function* authenticateUserSaga({payload:{roles,cachedRedirect=`/`}}){
     try {
         const user = yield select(state => state.user || {});
-        if( !AuthManager.authenticate(user) && !AuthManager.authorize(user,roles)){
+        if( !Auth.authenticate(user) && !Auth.authorize(user,roles)){
             yield put(push({pathname:'/sign', cachedRedirect})) ;
         }
     } catch(error) {
@@ -46,9 +45,9 @@ export function* signOutWatcher(){
 function* signOutSaga(){
     try {
         const user = yield select(state => state.user || {});
-        AuthManager.signOutUser(user);
-        yield put(createAction(A.SIGN_OUT)({}));
-        yield put(push({pathname:'/'}));
+        Auth.signOutUser(user);
+        yield put(createAction(A.SIGN_OUT)());
+        yield put(push({pathname:'/sign'}));
         yield spawn(showMessageSaga, `Sign out successful!`); 
     } catch(error) {
         yield spawn(showMessageSaga, `Sorry, something go wrong!`);

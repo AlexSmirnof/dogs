@@ -134,7 +134,7 @@ class Appbar extends Component {
         return (
             <div style={{marginBottom:4}}>
                 <AppBar title={title}
-                        onClick={() => this.showNavigation()}
+                        onClick={this.showNavigation}
                         iconElementRight={<span><Search onClick={this.showSearch} style={{marginRight:10}}/><ExitToApp/></span>} 
                         iconStyleRight={{color:'white',paddingTop:11,paddingRight:10,transform:'scale(1.2)',cursor:'pointer'}}
                         onRightIconButtonClick={this.signout}
